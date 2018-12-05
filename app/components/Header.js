@@ -1,10 +1,12 @@
 var React = require('react');
+var GetWeatherInput = require('./GetWeatherInput');
 
 class Header extends React.Component {
     render() {
       return (
         <header>
-          How's the weather?
+          How's dat weather?
+          <GetWeatherInput />
         </header>
       )
     }
