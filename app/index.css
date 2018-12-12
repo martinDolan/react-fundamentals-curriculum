@@ -18,7 +18,12 @@ main {
     justify-content: center;
     text-align: center;
     /* TODO SVG LOADER FOR WEBPACK */
+}
+main.home {
     background-image: url("./images/pattern.svg");
+}
+main.forecast {
+    background-color: #fff;
 }
 main form {
     display: flex;

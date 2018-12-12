@@ -1,13 +1,15 @@
 var React = require('react');
 var PropTypes = require('prop-types');
-
+var api = require('../utils/api');
+var Link = require('react-router-dom').Link;
 // class GetWeatherInput extends React.Component {}
 
 class GetWeatherInput extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            city: ''
+            city: '',
+            forecast: null,
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,15 +24,20 @@ class GetWeatherInput extends React.Component {
         })
     }
     handleSubmit(event) {
-        console.log('handle submit fired');
         event.preventDefault();
-
-        this.props.onSubmit(
-            this.props.id,
-            this.state.city
-        )
+        api.fetchCurrentWeather(this.state.city)
+        .then(function(forecast) {
+            this.setState(function () {
+                return {
+                  forecast: forecast
+                }
+              });
+            }.bind(this));
+            console.log(this.state.forecast);
     }
     render() {
+    //var match = this.props.match;
+    //aconsole.log(this.props.match);
       return (
         <div>
             <form onSubmit={this.handleSubmit}>
@@ -41,12 +48,21 @@ class GetWeatherInput extends React.Component {
                     value={this.state.city}
                     onChange={this.handleChange}
                 />
-                <button
-                    className='button'
-                    type='submit'>
-                        Submit
-                </button>
-            </form>    
+                <Link
+                className='button'
+                to={{pathname: '/forecast',
+                    search: this.state.city
+                    }}>
+                    <button
+                        className='button' 
+                        type='submit'>
+                            Get Weather
+                    </button>
+                </Link>
+                
+                {JSON.stringify(this.state.forecast, null, 2)}
+            </form>
+              
         </div>
       )
     }

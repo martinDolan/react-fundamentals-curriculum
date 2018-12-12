@@ -1,5 +1,5 @@
 var React = require('react');
-var api = require('./utils/api');
+var api = require('../utils/api');
 
 class DisplayWeather extends React.Component {
     constructor(props) {
@@ -9,7 +9,7 @@ class DisplayWeather extends React.Component {
         }
     }
     componentDidMount() {
-        api.fetchWeather('Greensboro')
+        api.fetchCurrentWeather('Greensboro')
             .then(function(city) {
                 console.log(city);
             })
